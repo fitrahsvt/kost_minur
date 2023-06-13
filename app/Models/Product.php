@@ -22,17 +22,17 @@ class Product extends Model
         'created_by',
     ];
 
-    public function categories()
+    public function category()
     {
         return $this->belongsTo(Category::class);
     }
 
-    public function brands()
+    public function brand()
     {
         return $this->belongsTo(Brand::class);
     }
 
-    public function users()
+    public function user()
     {
         return $this->belongsTo(User::class);
     }

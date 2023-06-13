@@ -17,12 +17,22 @@ class UserFactory extends Factory
      */
     public function definition()
     {
+        $gender = $this->faker->numberBetween(1, 2);
+        if ($gender == 1) {
+            $gender == 'P';
+        }else{
+            $gender == 'L';
+        }
         return [
             'name' => $this->faker->name(),
             'email' => $this->faker->unique()->safeEmail(),
-            'email_verified_at' => now(),
-            'password' => '$2y$10$92IXUNpkjO0rOQ5byMi.Ye4oKoEa3Ro9llC/.og/at2.uheWG/igi', // password
-            'remember_token' => Str::random(10),
+            'password' => bcrypt($this->faker->lexify()),
+            'role_id' => 3,
+            'avatar' => '1519821482876.jpg',
+            'phone' => $this->faker->numerify('08##########'),
+            'address' => $this->faker->address(),
+            'birth' => $this->faker->date(),
+            'gender' => $gender,
         ];
     }
 
