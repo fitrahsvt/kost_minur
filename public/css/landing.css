@@ -96,6 +96,7 @@
 	--light-yellow: #FFF2C6;
 	--orange: #FD7238;
 	--light-orange: #FFE0D3;
+    --light-dark: #0C0C1E;
 }
 
 *,
@@ -8184,6 +8185,11 @@ textarea.form-control-lg {
 .bg-dark {
   --bs-bg-opacity: 1;
   background-color: rgba(var(--bs-dark-rgb), var(--bs-bg-opacity)) !important;
+}
+
+.bg-light-dark {
+    --bs-bg-opacity: 1;
+    background-color: var(--light-dark) !important;
 }
 
 .bg-black {

@@ -2,8 +2,10 @@
 <html>
 <head>
   <title>Login Page</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-rbsA2VBKQhggwzxH7pPCaAqO46MgnOM80zW1RWuH61DGLwZJEdK2Kadq2F9CUG65" crossorigin="anonymous">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-kenU1KFdBIe4zVF0s0G1M5b4hcpxyD9F7jL+jjXkk+Q2h455rYXK/7HAuoJl+0I4" crossorigin="anonymous"></script>
+  <link href="{{asset('css/landing.css')}}" rel="stylesheet" />
+  <!-- Boxicons -->
+  <link href='https://unpkg.com/boxicons@2.0.9/css/boxicons.min.css' rel='stylesheet'>
 <style>
     body {
         display: flex;
@@ -34,6 +36,12 @@
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-md-12">
+        <div class="position-relative mb-4">
+            <a href="#" class="brand position-absolute top-50 start-50 translate-middle" >
+                <i class='bx bxs-smile'></i>
+                <span class="text">YayaMotor</span>
+            </a>
+        </div>
         <form action="{{route('register.store')}}" method="post">
             @csrf
             <h3 class="text-center mb-3">Register</h3>
@@ -67,7 +75,9 @@
             </div>
             <div class="d-grid">
             <button type="submit" class="btn btn-primary fw-bold">SIGN UP</button>
-            <a href="{{route('login')}}">punya akun? Log in disini</a>
+            <div>
+                Have an account?<a href="{{route('login')}}"> log in here</a>
+            </div>
           </div>
         </form>
       </div>

@@ -158,7 +158,7 @@
             </div>
         </section>
         <!-- Footer-->
-        <footer class="py-5 bg-dark" id="about">
+        <footer class="py-5 bg-light-dark" id="about">
             <div class="container">
                 <div class="row">
                     <div class="col">

@@ -277,7 +277,7 @@ class DatabaseSeeder extends Seeder
             'created_by' => 2
         ]);
 
-        Product::factory(20)->create();
+        Product::factory(25)->create();
 
         User::factory(20)->create();
 
