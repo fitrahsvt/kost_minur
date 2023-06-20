@@ -94,18 +94,28 @@
         <!-- Section-->
         <section id="product">
             <div class="container px-4 px-lg-5 mt-5">
-                {{-- filter harga --}}
+                {{-- filter nama --}}
                 <form action="{{ route('landing') }}" method="GET">
                     @csrf
-                    <div class="row g-3 my-5">
-                        <p>Price</p>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="Min" name="min" value="{{ old('min') }}">
+                    <div class="input-group mb-3">
+                        <input type="text" name="search" class="form-control" placeholder="Product's name" value="@isset($search) {{$search}} @endisset" aria-label="Recipient's username" aria-describedby="button-addon2">
+                        <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
+                    </div>
+                </form>
+                {{-- Filter Harga --}}
+                <form action="{{ route('landing') }}" method="GET">
+                    @csrf
+                    <div class="row g-3 align-items-center mb-5">
+                        <div class="col-auto">
+                            <label class="col-form-label">Price</label>
                         </div>
-                        <div class="col-sm-3">
-                            <input type="text" class="form-control" placeholder="Max" name="max" value={{ old('max') }}>
+                        <div class="col-auto">
+                            <input type="text" class="form-control" placeholder="Min" name="min" value="@isset($min) {{$min}} @endisset" >
                         </div>
-                        <div class="col-sm-3">
+                        <div class="col-auto">
+                            <input type="text" class="form-control" placeholder="Max" name="max" value=@isset($min) {{$max}} @endisset>
+                        </div>
+                        <div class="col-auto">
                             <button type="submit" class="btn btn-primary">Terapkan</button>
                         </div>
                     </div>

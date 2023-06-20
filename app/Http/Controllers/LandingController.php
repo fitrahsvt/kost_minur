@@ -22,11 +22,22 @@ class LandingController extends Controller
             $products = Product::with('category')->where('status', 'accepted')->whereHas('category', function ($query) use ($request){
                 $query->where('name', $request->category);
             })->paginate(8);
-        } else if ($request->min && $request->max){
+
+        }else if ($request->min && $request->max){
             $products = Product::where('status', 'accepted')->where('price', '>=', $request->min)->where('price', '<=', $request->max)->get();
+            $min = $request->min;
+            $max = $request->max;
+            return view('landing', compact('products', 'categories', 'sliders', 'min', 'max'));
+
+        }else if ($request->search){
+            $products = Product::where('name','LIKE','%'.$request->search.'%')->get();
+            $search = $request->search;
+            return view('landing', compact('products', 'categories', 'sliders', 'search'));
+
         }else{
-            // mengambil 8 data produk secara acak
+            // mengambil 12 data produk secara acak
             $products = Product::where('status', 'accepted')->inRandomOrder()->limit(12)->get();
+
         }
 
         return view('landing', compact('products', 'categories', 'sliders'));

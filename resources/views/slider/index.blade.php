@@ -24,12 +24,12 @@
                 <table>
                     <thead>
                         <tr>
-                            <th>#</th>
+                            <th width="5%">#</th>
                             <th>Title</th>
                             <th>Caption</th>
                             <th>image</th>
-                            <th>Status</th>
-                            <th>Action</th>
+                            <th width="10%" style="text-align: center">Status</th>
+                            <th width="15%" style="text-align: center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,7 +41,7 @@
                             <td>
                                 <img src="{{ asset('storage/slider/' . $s->image) }}" class="img-fluid"  alt="{{ $s->image }}">
                             </td>
-                            <td>
+                            <td style="text-align: center">
                                 @if ($s->status == 'waiting')
                                     <span class="status process">{{$s->status}}</span>
                                 @elseif ($s->status == 'accepted')
@@ -50,7 +50,7 @@
                                     <span class="status pending">{{$s->status}}</span>
                                 @endif
                             </td>
-                            <td>
+                            <td style="text-align: center">
                                 <form action="{{route('slider.destroy', $s->id)}}" method="POST" onsubmit="return confirm('Anda yakin menghapus ini?');">
                                     <div class="button-flex">
                                         @if (Auth::user()->role->name == 'admin')

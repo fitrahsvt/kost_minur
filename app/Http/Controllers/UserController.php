@@ -13,7 +13,8 @@ class UserController extends Controller
     public function index()
     {
         $users = User::with('role')->get();
-        return view('user.index', compact('users'));
+        $rolecount = Role::count();
+        return view('user.index', compact('users', 'rolecount'));
     }
 
     public function create()

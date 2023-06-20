@@ -14,9 +14,12 @@ class ProductController extends Controller
     public function index()
     {
         $products = Product::with('category', 'brand')->get();
+        $productforuser = Product::where('status', 'accepted')->get();
         // $products = Product::with('brands')->get();
+        $brandcount = Brand::count();
+        $categorycount = Category::count();
 
-        return view('product.index', compact('products'));
+        return view('product.index', compact('products', 'brandcount', 'categorycount', 'productforuser'));
     }
 
     public function create()

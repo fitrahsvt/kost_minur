@@ -22,7 +22,7 @@
                 <li>
                     <i class='bx bxs-group' style="background: var(--light-orange); color: var(--orange);"></i>
                     <span class="text">
-                        <h3>12</h3>
+                        <h3>{{$rolecount}}</h3>
                         <p>Role</p>
                     </span>
                 </li>
@@ -38,10 +38,6 @@
                             <th>Name</th>
                             <th>Role</th>
                             <th>email</th>
-                            {{-- <th>phone</th>
-                            <th>birth</th>
-                            <th>gender</th>
-                            <th>address</th> --}}
                             <th>action</th>
                         </tr>
                     </thead>
@@ -55,13 +51,6 @@
                                 <td>{{$u->name}}</td>
                                 <td>{{$u->role->name}}</td>
                                 <td>{{$u->email}}</td>
-                                {{-- <td>{{$u->phone}}</td>
-                                <td>{{$u->birth}}</td>
-                                <td>
-                                    @if ($u->gender == "P")Perempuan @endif
-                                    @if ($u->gender == "L")Laki-laki @endif
-                                </td>
-                                <td>{{$u->address}}</td> --}}
                                 <td>
                                     <form action="{{route('user.destroy', $u->id)}}" method="POST" onsubmit="return confirm('Anda yakin menghapus ini?');">
                                         <div>
