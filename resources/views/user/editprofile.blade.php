@@ -21,34 +21,23 @@
                 @csrf
                 @method('PUT')
                 <div class="form-group">
-                    <label for="address">Address</label>
-                    <textarea id="address" name="address" @error('address') style="border: 1px solid red;" @enderror>{{$user->address}}"</textarea>
-                    @error('address')
+                    <label for="alamat">alamat</label>
+                    <textarea id="alamat" name="alamat" @error('alamat') style="border: 1px solid red;" @enderror>{{$user->alamat}}</textarea>
+                    @error('alamat')
                     <small style="color: red">{{$message }}</small>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="birth">birthdate</label>
+                    <label for="birth">Tanggal Lahir</label>
                     <input type="date" value="{{$user->birth}}" id="birth" name="birth" @error('birth') style="border: 1px solid red;" @enderror>
                     @error('birth')
                     <small style="color: red">{{$message }}</small>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="gender">Gender</label>
-                    <select id="gender" name="gender" @error('gender') style="border: 1px solid red;" @enderror>
-                        <option selected disabled>- Choose Gender -</option>
-                            <option value="P" {{ $user->gender == "P" ? 'selected' : '' }}>Perempuan</option>
-                            <option value="L" {{ $user->gender == "L" ? 'selected' : '' }}>Laki-laki</option>
-                    </select>
-                    @error('gender')
-                    <small style="color: red">{{$message }}</small>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="avatar">Picture photo</label>
-                    <input type="file" name="avatar" id="avatar" accept=".jpg, .jpeg, .png., .webp" @error('avatar') style="border: 1px solid red;" @enderror>
-                    @error('avatar')
+                    <label for="ktp">Foto KTP</label>
+                    <input type="file" name="ktp" id="ktp" accept=".jpg, .jpeg, .png., .webp" @error('ktp') style="border: 1px solid red;" @enderror>
+                    @error('ktp')
                     <small style="color: red">{{$message }}</small>
                     @enderror
                 </div>
@@ -57,7 +46,7 @@
             </form>
         </div>
         <footer>
-            <div>Copyright &copy; yaya_motor 2023</div>
+            <div>Copyright &copy; Kost Minur 2024</div>
         </footer>
     </main>
 @endsection

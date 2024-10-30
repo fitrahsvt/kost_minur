@@ -93,7 +93,7 @@ body {
 }
 #sidebar .side-menu {
 	width: 100%;
-	margin-top: 48px;
+	margin-top: 10px;
 }
 #sidebar .side-menu li {
 	height: 48px;
@@ -481,6 +481,9 @@ body {
 #content main .table-data .order table tr td .status.pending {
 	background: var(--red);
 }
+#content main .table-data .order table tr td .status.waiting {
+	background: green;
+}
 
 
 #content main .table-data .todo {
@@ -764,16 +767,43 @@ body {
   .bxs-user-detail{
     padding: 10px;
     background: var(--light-blue);
-    color: var(--dark-blue);
+    color: var(--dark);
     font-size: 20px;
     border-radius: 5px;
     cursor: pointer;
   }
 
   .bxs-user-detail:hover{
-    background: var(--dark-blue);
-    color: var(--light-blue);
-  }
+      background: var(--dark-blue);
+      color: var(--light-blue);
+    }
+
+    .bx-upload{
+      padding: 10px;
+      background: var(--dark-grey);
+      color: var(--dark);
+      font-size: 20px;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    .bx-upload:hover{
+        background: var(--dark);
+        color: var(--dark-grey);
+      }
+
+    .bxs-low-vision{
+        padding: 10px;
+        background: var(--blue);
+        color: black;
+        font-size: 20px;
+        border-radius: 5px;
+        cursor: pointer;
+    }
+
+    .bxs-low-vision:hover{
+        background: var(--light-blue);
+    }
 
   .bxs-detail{
     padding: 10px;

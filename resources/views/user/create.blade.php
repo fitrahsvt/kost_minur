@@ -32,9 +32,9 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="name">Name</label>
-                    <input type="text" id="name" name="name" @error('name') style="border: 1px solid red;" @enderror value="{{old('name')}}">
-                    @error('name')
+                    <label for="nama">Nama</label>
+                    <input type="text" id="nama" name="nama" @error('nama') style="border: 1px solid red;" @enderror value="{{old('nama')}}">
+                    @error('nama')
                     <small style="color: red">{{$message }}</small>
                     @enderror
                 </div>
@@ -53,41 +53,30 @@
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="phone">Phone</label>
-                    <input type="text" id="phone" name="phone" @error('phone') style="border: 1px solid red;" @enderror value="{{old('phone')}}">
-                    @error('phone')
+                    <label for="no_hp">Nomor Telepon Aktif</label>
+                    <input type="text" id="no_hp" name="no_hp" @error('no_hp') style="border: 1px solid red;" @enderror value="{{old('no_hp')}}">
+                    @error('no_hp')
                     <small style="color: red">{{$message }}</small>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="address">Address</label>
-                    <textarea id="address" name="address" @error('address') style="border: 1px solid red;" @enderror>{{old('address')}}</textarea>
-                    @error('address')
+                    <label for="alamat">Alamat</label>
+                    <textarea id="alamat" name="alamat" @error('alamat') style="border: 1px solid red;" @enderror>{{old('alamat')}}</textarea>
+                    @error('alamat')
                     <small style="color: red">{{$message }}</small>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="birth">birthdate</label>
+                    <label for="birth">Tanggal Lahir</label>
                     <input type="date" id="birth" name="birth" @error('birth') style="border: 1px solid red;" @enderror value="{{old('birth')}}">
                     @error('birth')
                     <small style="color: red">{{$message }}</small>
                     @enderror
                 </div>
                 <div class="form-group">
-                    <label for="gender">Gender</label>
-                    <select id="gender" name="gender" @error('gender') style="border: 1px solid red;" @enderror>
-                        <option selected disabled>- Choose Gender -</option>
-                            <option value="P" {{old('gender') == "P" ? 'selected' : ''}}>Perempuan</option>
-                            <option value="L" {{old('gender') == "L" ? 'selected' : ''}}>Laki-laki</option>
-                    </select>
-                    @error('gender')
-                    <small style="color: red">{{$message }}</small>
-                    @enderror
-                </div>
-                <div class="form-group">
-                    <label for="avatar">Picture</label>
-                    <input type="file" name="avatar" id="avatar" accept=".jpg, .jpeg, .png., .webp" @error('avatar') style="border: 1px solid red;" @enderror>
-                    @error('avatar')
+                    <label for="ktp">Foto KTP</label>
+                    <input type="file" name="ktp" id="ktp" accept=".jpg, .jpeg, .png., .webp" @error('ktp') style="border: 1px solid red;" @enderror>
+                    @error('ktp')
                     <small style="color: red">{{$message }}</small>
                     @enderror
                 </div>
@@ -96,7 +85,7 @@
             </form>
         </div>
         <footer>
-            <div>Copyright &copy; yaya_motor 2023</div>
+            <div>Copyright &copy; Kost Minur 2024</div>
         </footer>
     </main>
 @endsection

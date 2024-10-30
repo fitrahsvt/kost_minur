@@ -21,8 +21,8 @@
             <div class="order">
                 <div class="profil-flex" style="display: flex; align-items: center;">
                     <div class="profil" style="text-align: center; margin: 20px">
-                        @if ($user->avatar)
-                            <img src="{{ asset('storage/user/' . $user->avatar) }}" alt="{{$user->avatar}}"
+                        @if (Storage::exists('public/user/' . $user->ktp))
+                            <img src="{{ asset('storage/user/' . $user->ktp) }}" alt="{{$user->ktp}}"
                             style="
                                 border-radius: 50%;
                                 width: 40vmin;
@@ -38,34 +38,57 @@
                                 height: 40vmin;
                                 object-fit: cover; ">
                         @endif
-                        <h3>{{$user->name}}</h3>
+                        <h3>{{$user->nama}}</h3>
                         <p style="margin-bottom: 5px">{{$user->birth}}</p>
                         <a type="button" class="button-profil" href="{{route('user.index')}}">Back</a>
                     </div>
                     <div class="detail" style="margin-left: 20px">
-                        <p>Email :</p>
-                        <h4>{{$user->email}}</h4>
-                        <br>
-                        <p>Phone :</p>
-                        <h4>{{$user->phone}}</h4>
-                        <br>
-                        <p>Address :</p>
-                        <h4>{{$user->address}}</h4>
-                        <br>
-                        <p>gender :</p>
-                        @if ($user->gender == 'L')
-                            <h4>Laki-laki</h4>
-                        @endif
-                        @if ($user->gender == 'P')
-                            <h4>Perempuan</h4>
-                        @endif
-
+                        <table style="border-collapse: collapse;">
+                            <tr>
+                                <td>Email</td>
+                                <td>: {{$user->email}}</td>
+                            </tr>
+                            <tr>
+                                <td>Role</td>
+                                <td>: {{$user->role->name}}</td>
+                            </tr>
+                            @if (!is_null($user->room))
+                                <tr>
+                                    <td>Kamar</td>
+                                    <td>: {{ $user->room->nomor }}</td>
+                                </tr>
+                            @endif
+                            @if (!is_null($user->no_hp))
+                                <tr>
+                                    <td>Nomor Telp</td>
+                                    <td>: {{$user->no_hp}}</td>
+                                </tr>
+                            @endif
+                            @if (!is_null($user->no_ktp))
+                                <tr>
+                                    <td>Nomor KTP</td>
+                                    <td>: {{$user->no_ktp}}</td>
+                                </tr>
+                            @endif
+                            @if (!is_null($user->no_wali))
+                                <tr>
+                                    <td>Nomor telp Wali</td>
+                                    <td>: {{$user->no_wali}}</td>
+                                </tr>
+                            @endif
+                            @if (!is_null($user->alamat))
+                                <tr>
+                                    <td>Alamat</td>
+                                    <td>: {{$user->alamat}}</td>
+                                </tr>
+                            @endif
+                        </table>
                     </div>
                 </div>
             </div>
         </div>
         <footer>
-            <div>Copyright &copy; yaya_motor 2023</div>
+            <div>Copyright &copy; Kost Minur 2024</div>
         </footer>
     </main>
 @endsection

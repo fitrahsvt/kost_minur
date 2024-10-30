@@ -2,22 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Brand;
-use Illuminate\Http\Request;
+use App\Models\Facility;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Http\Request;
 
-class BrandController extends Controller
+class FacilityController extends Controller
 {
     public function index()
     {
-        // load data dari table brands
-        $brand = Brand::all();
+        $facilities = Facility::all();
 
-        // passing data brands ke view brand.index
-        return view('brand.index', compact('brand'));
+        return view('facility.index', compact('facilities'));
     }
 
-    // function store untuk menyimpan data ke table brands
+    // function store untuk menyimpan data ke table
     public function store(Request $request)
     {
 
@@ -30,12 +28,12 @@ class BrandController extends Controller
         }
 
         // insert data ke table brands
-        $brand = Brand::create([
-            'name' => $request->name,
+        $facility = Facility::create([
+            'nama' => $request->name,
         ]);
 
         // alihkan halaman ke halaman brands
-        return redirect()->route('brand.index');
+        return redirect()->route('facility.index');
     }
 
     // function edit untuk menampilkan form edit data
@@ -43,10 +41,10 @@ class BrandController extends Controller
     {
         // cari data berdasarkan id menggunakan find()
         // find() merupakan fungsi eloquent untuk mencari data berdasarkan primary key
-        $brand = Brand::find($id);
+        $facility = Facility::find($id);
 
         // load view edit.blade.php dan passing data brand
-        return view('brand.edit', compact('brand'));
+        return view('facility.edit', compact('facility'));
     }
 
     // function update untuk mengupdate data yang sudah ada
@@ -62,24 +60,24 @@ class BrandController extends Controller
         }
 
         // update data brands
-        Brand::where('id', $id)->update([
-            'name' => $request->name,
+        Facility::where('id', $id)->update([
+            'nama' => $request->name,
         ]);
 
         // alihkan halaman ke halaman brands
-        return redirect()->route('brand.index');
+        return redirect()->route('facility.index');
     }
 
     // function destroy untuk menghapus data yang sudah ada
     public function destroy($id)
     {
         // ambil data category berdasarkan id
-        $brand = Brand::find($id);
+        $facility = Facility::find($id);
 
         // hapus data category
-        $brand->delete();
+        $facility->delete();
 
         // alihkan halaman ke halaman brands
-        return redirect()->route('brand.index');
+        return redirect()->route('facility.index');
     }
 }

@@ -30,10 +30,10 @@ class RegisterController extends Controller
         }
 
         $store = User::create([
-            'name' => $request->name,
+            'nama' => $request->name,
             'email' => $request->email,
             'role_id' => 3,
-            'phone' => $request->phone,
+            'no_hp' => $request->phone,
             'password' => Hash::make($request->password),
         ]);
 

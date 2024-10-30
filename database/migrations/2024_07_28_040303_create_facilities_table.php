@@ -13,8 +13,10 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->enum('gender', ['P', 'L'])->after('birth')->nullable();
+        Schema::create('facilities', function (Blueprint $table) {
+            $table->id();
+            $table->string('nama');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +27,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('gender');
-        });
+        Schema::dropIfExists('facilities');
     }
 };

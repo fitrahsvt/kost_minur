@@ -41,37 +41,37 @@
         </button>
     </div>
     @endif
-  <div class="container">
-
-    <div class="row justify-content-center">
-      <div class="col-md-12">
-            <div class="position-relative mb-4">
-                <a href="#" class="brand position-absolute top-50 start-50 translate-middle" >
-                    <i class='bx bxs-smile'></i>
-                    <span class="text">YayaMotor</span>
-                </a>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-12">
+                <div class="position-relative mb-4">
+                    <a href="#" class="brand position-absolute top-50 start-50 translate-middle" style="white-space: nowrap;">
+                        <i class='bx bxs-building-house'></i>
+                        <span class="text">Kost Minur</span>
+                    </a>
+                </div>
+                <form action="{{route('authenticate')}}" method="POST">
+                    @csrf
+                    <h3 class="text-center mb-3">Log in</h3>
+                    <div class="form-floating mb-3">
+                        <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                        <label for="floatingInput">Email address</label>
+                    </div>
+                    <div class="form-floating mb-3">
+                        <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
+                        <label for="floatingPassword">Password</label>
+                    </div>
+                    <div class="d-grid">
+                        <button type="submit" class="btn btn-primary fw-bold">LOG IN</button>
+                        <div>
+                            Not registered yet?
+                            <a href="{{route('register')}}"> Register now</a>
+                        </div>
+                    </div>
+                </form>
             </div>
-          <form action="{{route('authenticate')}}" method="POST">
-            @csrf
-            <h3 class="text-center mb-3">Log in</h3>
-            <div class="form-floating mb-3">
-                <input name="email" type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
-                <label for="floatingInput">Email address</label>
-              </div>
-              <div class="form-floating mb-3">
-                <input name="password" type="password" class="form-control" id="floatingPassword" placeholder="Password">
-                <label for="floatingPassword">Password</label>
-              </div>
-            <div class="d-grid">
-            <button type="submit" class="btn btn-primary fw-bold">LOG IN</button>
-            <div>
-                Not registered yet?
-                <a href="{{route('register')}}"> Register now</a>
-            </div>
-            </div>
-        </form>
-      </div>
+        </div>
     </div>
-  </div>
+
 </body>
 </html>

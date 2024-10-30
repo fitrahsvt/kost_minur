@@ -13,8 +13,11 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->date('birth')->after('address')->nullable();
+        Schema::create('facility_room', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('facility_id')->constrained('facilities')->onDelete('cascade');
+            $table->foreignId('room_id')->constrained('rooms')->onDelete('cascade');
+            $table->timestamps();
         });
     }
 
@@ -25,8 +28,6 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('birth');
-        });
+        Schema::dropIfExists('facility_room');
     }
 };

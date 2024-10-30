@@ -4,17 +4,52 @@ namespace App\Http\Controllers;
 
 use App\Models\Role;
 use App\Models\User;
+use Illuminate\Support\Facades\Hash;
+use App\Models\Room;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('role')->get();
+        // Mendapatkan input filter dari request
+        $search = $request->input('search'); // Filter berdasarkan nama
+        $jenis = $request->input('jenis');   // Filter berdasarkan status (aktif atau non-aktif)
+        $roomId = $request->input('room');   // Filter berdasarkan kamar
+
+        // Query dasar mengambil data user dengan relasi role dan room
+        $query = User::with('role', 'room');
+
+        // Jika ada input pencarian nama, tambahkan ke query
+        if ($search) {
+            $query->where('nama', 'like', '%' . $search . '%');
+        }
+
+        // Jika ada filter jenis, sesuaikan query berdasarkan status penyewa
+        if ($jenis === 'regular') {
+            $query->where('jenis_penyewa', 'regular'); // Anggap yang 'aktif' adalah yang memiliki kamar
+        } elseif ($jenis === 'expired') {
+            $query->where('jenis_penyewa', 'expired'); // Anggap yang 'non-aktif' adalah yang tidak memiliki kamar
+        }
+
+        // Jika ada filter kamar, tambahkan ke query
+        if ($roomId) {
+            $query->where('kamar_id', $roomId);
+        }
+
+        // Mengambil data users dengan paginasi setelah semua filter diterapkan
+        $users = $query->paginate(10);
+
+        // Mengambil semua data rooms untuk dropdown
+        $rooms = Room::all();
+
+        // Menghitung jumlah role untuk keperluan tampilan
         $rolecount = Role::count();
-        return view('user.index', compact('users', 'rolecount'));
+
+        // Mengirim data ke view
+        return view('user.index', compact('users', 'rooms', 'search', 'jenis', 'roomId', 'rolecount'));
     }
 
     public function create()
@@ -28,14 +63,13 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(),[
             'role' => 'required',
-            'name' => 'required|string|min:3',
+            'nama' => 'required|string|min:3',
             'email' => 'required|email|unique:users',
-            'phone' => 'required',
+            'no_hp' => 'required',
             'password' => 'required|string|min:8',
-            'address' => 'required|string|min:10',
+            'alamat' => 'required|string|min:10',
             'birth' => 'required',
-            'gender' => 'required',
-            'avatar' => 'required|image|mimes:jpeg,png,jpg,jfif|max:2048',
+            'ktp' => 'required|image|mimes:jpeg,png,jpg,jfif|max:2048',
         ]);
 
         if ($validator->fails()) {
@@ -43,21 +77,20 @@ class UserController extends Controller
         }
 
         // ubah nama file gambar dengan angka random
-        $imageName = time().'.'.$request->avatar->extension();
+        $imageName = time().'.'.$request->ktp->extension();
 
         // upload file gambar ke folder slider
-        Storage::putFileAs('public/user', $request->file('avatar'), $imageName);
+        Storage::putFileAs('public/user', $request->file('ktp'), $imageName);
 
         $user = User::create([
             'role_id' => $request->role,
-            'name' => $request->name,
+            'nama' => $request->nama,
             'email' => $request->email,
-            'phone' => $request->phone,
-            'password' => $request->password,
-            'avatar' => $imageName,
-            'address' => $request->address,
-            'birth' => $request->birth,
-            'gender' =>  $request->gender
+            'no_hp' => $request->no_hp,
+            'password' => Hash::make($request->password),
+            'ktp' => $imageName,
+            'alamat' => $request->alamat,
+            'birth' => $request->birth
         ]);
         return redirect()->route('user.index');
     }
@@ -74,54 +107,50 @@ class UserController extends Controller
 
         $validator = Validator::make($request->all(),[
             'role' => 'required',
-            'name' => 'required|string|min:3',
-            'email' => 'required|email|unique:users',
-            'phone' => 'required',
+            'nama' => 'required|string|min:3',
+            'no_hp' => 'required',
             'password' => 'required|string|min:8',
-            'address' => 'required|string|min:10',
-            'birth' => 'required',
-            'gender' => 'required',
+            'alamat' => 'required|string|min:10',
+            'birth' => 'required'
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        if ($request->hasFile('avatar')) {
+        if ($request->hasFile('ktp')) {
             // ambil nama file gambar lama dari database
-            $gambar_lama = User::find($id)->avatar;
+            $gambar_lama = User::find($id)->ktp;
 
             //hapus file gambar lama
             Storage::delete('public/user/'.$gambar_lama);
 
             // ubah nama file gambar dengan angka random
-            $imageName = time().'.'.$request->avatar->extension();
+            $imageName = time().'.'.$request->ktp->extension();
 
             // upload file gambar ke folder slider
-            Storage::putFileAs('public/user', $request->file('avatar'), $imageName);
+            Storage::putFileAs('public/user', $request->file('ktp'), $imageName);
 
             User::where('id', $id)->update([
                 'role_id' => $request->role,
-                'name' => $request->name,
+                'nama' => $request->nama,
                 'email' => $request->email,
-                'phone' => $request->phone,
+                'no_hp' => $request->no_hp,
                 'password' => $request->password,
-                'avatar' => $imageName,
-                'address' => $request->address,
-                'birth' => $request->birth,
-                'gender' =>  $request->gender
+                'ktp' => $imageName,
+                'alamat' => $request->alamat,
+                'birth' => $request->birth
             ]);
 
         }else{
             User::where('id', $id)->update([
                 'role_id' => $request->role,
-                'name' => $request->name,
+                'nama' => $request->nama,
                 'email' => $request->email,
-                'phone' => $request->phone,
+                'no_hp' => $request->no_hp,
                 'password' => $request->password,
-                'address' => $request->address,
-                'birth' => $request->birth,
-                'gender' =>  $request->gender
+                'alamat' => $request->alamat,
+                'birth' => $request->birth
             ]);
         }
 
@@ -131,7 +160,7 @@ class UserController extends Controller
     public function destroy($id)
     {
         $user = User::find($id);
-        Storage::delete('public/user/'.$user->avatar);
+        Storage::delete('public/user/'.$user->ktp);
 
         User::where('id', $id)->delete();
         return redirect()->route('user.index');
@@ -146,40 +175,37 @@ class UserController extends Controller
     {
 
         $validator = Validator::make($request->all(),[
-            'address' => 'required|string|min:10',
-            'birth' => 'required',
-            'gender' => 'required',
+            'alamat' => 'required|string|min:10',
+            'birth' => 'required'
         ]);
 
         if ($validator->fails()) {
             return redirect()->back()->withErrors($validator->errors())->withInput();
         }
 
-        if ($request->hasFile('avatar')) {
+        if ($request->hasFile('ktp')) {
             // ambil nama file gambar lama dari database
-            $gambar_lama = User::find($id)->avatar;
+            $gambar_lama = User::find($id)->ktp;
 
             //hapus file gambar lama
             Storage::delete('public/user/'.$gambar_lama);
 
             // ubah nama file gambar dengan angka random
-            $imageName = time().'.'.$request->avatar->extension();
+            $imageName = time().'.'.$request->ktp->extension();
 
             // upload file gambar ke folder slider
-            Storage::putFileAs('public/user', $request->file('avatar'), $imageName);
+            Storage::putFileAs('public/user', $request->file('ktp'), $imageName);
 
             User::where('id', $id)->update([
-                'avatar' => $imageName,
-                'address' => $request->address,
-                'birth' => $request->birth,
-                'gender' =>  $request->gender
+                'ktp' => $imageName,
+                'alamat' => $request->alamat,
+                'birth' => $request->birth
             ]);
 
         }else{
             User::where('id', $id)->update([
-                'address' => $request->address,
-                'birth' => $request->birth,
-                'gender' =>  $request->gender
+                'alamat' => $request->alamat,
+                'birth' => $request->birth
             ]);
         }
 
@@ -188,7 +214,7 @@ class UserController extends Controller
 
     public function detail($id)
     {
-        $user = User::find($id);
+        $user = User::with('role', 'room')->find($id);
 
         return view('user.detail', compact('user'));
     }

@@ -45,7 +45,7 @@ class ProductController extends Controller
             'category' => 'required',
             'name' => 'required|string|min:3',
             'price' => 'required|integer',
-            'brand' => 'required|string',
+            'brand' => 'required',
             'desc' => 'required'
         ]);
 
@@ -59,7 +59,7 @@ class ProductController extends Controller
         $product = Product::create([
             'category_id' => $request->category,
             'name' => $request->name,
-            'image' => '1686139606.jpg',
+            'image' => '1686536852.jpg',
             'desc' => $request->desc,
             'price' => $request->price,
             'brand_id' => $request->brand,
@@ -93,7 +93,7 @@ class ProductController extends Controller
             $products = $product->update([
                 'category_id' => $request->category,
                 'name' => $request->name,
-                'image' => '1686139606.jpg',
+                'image' => '1686536852.jpg',
                 'desc' => $request->desc,
                 'price' => $request->price,
                 'brand_id' => $request->brand,

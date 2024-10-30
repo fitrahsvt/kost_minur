@@ -18,15 +18,18 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'nama',
         'role_id',
-        'avatar',
-        'phone',
-        'address',
+        'jenis_penyewa',
+        'kamar_id',
+        'no_wali',
+        'no_ktp',
+        'ktp',
         'birth',
-        'gender',
+        'alamat',
+        'no_hp',
+        'password',
+        'email'
     ];
 
     public function role()
@@ -34,9 +37,14 @@ class User extends Authenticatable
         return $this->belongsTo(Role::class);
     }
 
-    public function product()
+    public function room()
     {
-        return $this->hasMany(Product::class);
+        return $this->belongsTo(Room::class, 'kamar_id');
+    }
+
+    public function transactions()
+    {
+        return $this->hasMany(Transaction::class, 'penyewa_id');
     }
 
     /**

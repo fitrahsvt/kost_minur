@@ -2,44 +2,44 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Category;
-use App\Models\Product;
+use App\Models\Room;
+use App\Models\Facility;
 use App\Models\Slider;
 use Illuminate\Http\Request;
 
 class LandingController extends Controller
 {
+
     public function index(Request $request)
     {
+        // Mengambil data facility untuk dropdown
+        $facilities = Facility::all();
 
-        // mengambil data category
-        $categories = Category::all();
-
-        // mengambil data slider
+        // Mengambil data slider
         $sliders = Slider::where('status', 'accepted')->get();
 
-        if ($request->category) {
-            $products = Product::with('category')->where('status', 'accepted')->whereHas('category', function ($query) use ($request){
-                $query->where('name', $request->category);
-            })->paginate(8);
+        // Query dasar untuk kamar
+        $roomsQuery = Room::where('status_ketersediaan', 'ada');
 
-        }else if ($request->min && $request->max){
-            $products = Product::where('status', 'accepted')->where('price', '>=', $request->min)->where('price', '<=', $request->max)->get();
-            $min = $request->min;
-            $max = $request->max;
-            return view('landing', compact('products', 'categories', 'sliders', 'min', 'max'));
-
-        }else if ($request->search){
-            $products = Product::where('name','LIKE','%'.$request->search.'%')->get();
-            $search = $request->search;
-            return view('landing', compact('products', 'categories', 'sliders', 'search'));
-
-        }else{
-            // mengambil 12 data produk secara acak
-            $products = Product::where('status', 'accepted')->inRandomOrder()->limit(12)->get();
-
+        // Filter berdasarkan fasilitas jika ada
+        if ($request->has('facility') && $request->facility) {
+            $roomsQuery->whereHas('facilities', function ($query) use ($request) {
+                $query->where('nama', $request->facility);
+            });
         }
 
-        return view('landing', compact('products', 'categories', 'sliders'));
+        // Filter berdasarkan rentang harga jika min dan max diisi
+        if ($request->has('min') && $request->has('max') && is_numeric($request->min) && is_numeric($request->max)) {
+            $roomsQuery->whereBetween('harga', [$request->min, $request->max]);
+            $min = $request->min;
+            $max = $request->max;
+        } else {
+            $min = $max = null;
+        }
+
+        // Ambil data kamar setelah query filter
+        $rooms = $roomsQuery->inRandomOrder()->limit(8)->get();
+
+        return view('landing', compact('rooms', 'facilities', 'sliders', 'min', 'max'));
     }
 }

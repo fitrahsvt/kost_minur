@@ -5,7 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="description" content="" />
         <meta name="author" content="" />
-        <title>Yaya Motor</title>
+        <title>Kost Minur</title>
         <!-- Favicon-->
         <link rel="icon" type="image/x-icon" href="{{asset('favicon.ico')}}" />
         <!-- Bootstrap icons-->
@@ -21,20 +21,20 @@
             <div class="container px-4 px-lg-5">
                 {{-- <a class="navbar-brand" href="#!">YayaMotor</a> --}}
                 <a href="{{route('landing')}}" class="brand">
-                    <i class='bx bxs-smile'></i>
-                    <span class="text">YayaMotor</span>
+        <i class='bx bxs-building-house'></i>
+        <span class="text">Kost Minur</span>
                 </a>
                 <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation"><span class="navbar-toggler-icon"></span></button>
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <ul class="navbar-nav me-auto mb-2 mb-lg-0 ms-lg-4">
                         <li class="nav-item atas"><a class="nav-link" aria-current="page" href="#home">Home</a></li>
                         <li class="nav-item"><a class="nav-link" href="#about">About</a></li>
-                        <li class="nav-item"><a class="nav-link" href="#product">Product</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#product">Katalog</a></li>
                         <li class="nav-item dropdown">
-                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">Categories</a>
+                            <a class="nav-link dropdown-toggle" id="navbarDropdown" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">facility</a>
                             <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                @foreach ($categories as $c)
-                                <li><a class="dropdown-item" href="{{route('landing', ['category' => $c->name])}}">{{$c->name}}</a></li>
+                                @foreach ($facilities as $f)
+                                <li><a class="dropdown-item" href="{{route('landing', ['facility' => $f->nama])}}">{{$f->nama}}</a></li>
                                 @endforeach
                                 <li><a class="dropdown-item" href="{{route('landing')}}">All</a></li>
                             </ul>
@@ -94,26 +94,17 @@
         <!-- Section-->
         <section id="product">
             <div class="container px-4 px-lg-5 mt-5">
-                {{-- filter nama --}}
-                <form action="{{ route('landing') }}" method="GET">
-                    @csrf
-                    <div class="input-group mb-3">
-                        <input type="text" name="search" class="form-control" placeholder="Product's name" value="@isset($search) {{$search}} @endisset" aria-label="Recipient's username" aria-describedby="button-addon2">
-                        <button class="btn btn-outline-primary" type="submit" id="button-addon2">Search</button>
-                    </div>
-                </form>
                 {{-- Filter Harga --}}
                 <form action="{{ route('landing') }}" method="GET">
-                    @csrf
                     <div class="row g-3 align-items-center mb-5">
                         <div class="col-auto">
                             <label class="col-form-label">Price</label>
                         </div>
                         <div class="col-auto">
-                            <input type="text" class="form-control" placeholder="Min" name="min" value="@isset($min) {{$min}} @endisset" >
+                            <input type="text" class="form-control" placeholder="Min" name="min" value="{{ old('min', $min) }}">
                         </div>
                         <div class="col-auto">
-                            <input type="text" class="form-control" placeholder="Max" name="max" value=@isset($min) {{$max}} @endisset>
+                            <input type="text" class="form-control" placeholder="Max" name="max" value="{{ old('max', $max) }}">
                         </div>
                         <div class="col-auto">
                             <button type="submit" class="btn btn-primary">Terapkan</button>
@@ -122,30 +113,26 @@
                 </form>
 
                 <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
-                    @forelse ($products as $product)
+                    @forelse ($rooms as $room)
                     <div class="col mb-5">
                         <div class="card h-100">
-                            <div class="badge position-absolute categorylanding" style="top: 0.5rem; right: 0.5rem">{{$product->category->name}}</div>
+                            <div class="badge position-absolute categorylanding" style="top: 0.5rem; right: 0.5rem">PUTRA</div>
                             <!-- Product image-->
-                            <img class="card-img-top" src="{{ asset('storage/product/' . $product->image) }}" alt="{{ $product->name }}" />
+                            <img class="card-img-top" src="{{ asset('storage/room/' . $room->foto) }}" alt="{{ $room->nomor }}" />
 
                             <!-- Product details-->
                             <div class="card-body pt-4 ">
                                 <div >
                                     <!-- Product name-->
-                                    <a href="{{ route('product.show', ['id' => $product->id]) }}" style="text-decoration: none" class="text-dark">
-                                        <h5 class="fw-bold" >{{ $product->name }}</h5>
-                                        <small class="px-2 bg-warning rounded-4" >{{$product->brand->name}}</small>
+                                    <a href="{{ route('room.show', ['id' => $room->id]) }}" style="text-decoration: none" class="text-dark">
+                                        <h5 class="fw-bold" >Kamar Nomor {{ $room->nomor }}</h5>
+                                        <small class="px-2 bg-warning rounded-4" >Kamar {{ $room->ukuran }}</small>
                                     </a>
                                     <!-- Product price-->
                                     <p class="text-primary mt-2">
-                                        Rp. {{ number_format($product->price, 0) }},-
+                                        Rp. {{ number_format($room->harga, 0) }},-/Bulan
                                     </p>
                                 </div>
-                            </div>
-                            <!-- Product actions-->
-                            <div class="card-footer p-4 pt-0 border-top-0 bg-transparent">
-                                <div class="text-center"><a class="btn btn-success" href="https://wa.me/6289627543832"><i class='bx bxl-whatsapp me-1'></i>Order Now</a></div>
                             </div>
                         </div>
                     </div>
@@ -163,15 +150,15 @@
                 <div class="row">
                     <div class="col">
                         <div class="brand">
-                            <i class='bx bxs-smile'></i>
-                            <span class="text">YayaMotor</span>
+                            <i class='bx bxs-building-house'></i>
+                            <span class="text">Kost Minur</span>
                         </div>
-                        <p class="me-4 text-white">YayaMotor merupakan Store yang menjual aneka kebutuhan motor, mulai dari Sparepart motor, aksesoris motor, perlengkapan rider, perkakas, dan lain sebagainya.</p>
+                        <p class="me-4 text-white">Kost Minur menyediakan hunian nyaman dan strategis dengan fasilitas lengkap dan lingkungan yang aman. Tempat ideal bagi mahasiswa dan pekerja yang mencari tempat tinggal tenang dan bersahabat.</p>
                     </div>
                     <div class="col">
                         <div class="d-flex">
                             <i class='bx bxs-map text-white me-2'></i>
-                            <p class="text-white" >Komplek Cimpago Permai, Kec. Pauh, Kel. Koto Luar, Kota Padang, Sumatera Barat</p>
+                            <p class="text-white" >jl. Koto luar, Kec. Pauh, Depan Pos Pemuda Gendmudtaka</p>
                         </div>
                         <p class="text-white" >Develop by Fitrah Amaliah Muis </p>
                         <a href="https://github.com/fitrahsvt"><i class='bx bxl-github text-white fs-1'></i></a>
@@ -181,7 +168,7 @@
                     </div>
                 </div>
                 <hr class="text-white">
-                <p class="m-0 text-center text-white">Copyright &copy; Yaya Motor 2023 | fswd 2</p>
+                <p class="m-0 text-center text-white">Copyright &copy; Kost Minur 2024</p>
             </div>
         </footer>
         <!-- Bootstrap core JS-->

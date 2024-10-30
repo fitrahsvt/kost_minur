@@ -10,13 +10,11 @@
                         <a href="#">Slider</a>
                     </li>
                 </ul>
-        @if (Auth::user()->role->name == 'staff')
                 <br>
                 <a href="{{route('slider.create')}}" class="btn-download">
                     <i class='bx bx-plus' ></i>
                     <span class="text">Create New</span>
                 </a>
-                @endif
             </div>
         </div>
         <div class="table-data">
@@ -29,7 +27,7 @@
                             <th>Caption</th>
                             <th>image</th>
                             <th width="10%" style="text-align: center">Status</th>
-                            <th width="15%" style="text-align: center">Action</th>
+                            <th style="text-align: center">Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -37,7 +35,7 @@
                         <tr>
                             <td>{{ $loop->iteration }}</td>
                             <td>{{ $s->title }}</td>
-                            <td>{{ $s->caption }}</td>
+                            <td style="font-size: 12px; color: #666; text-align: center; max-width: 150px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;">{{ $s->caption }}</td>
                             <td>
                                 <img src="{{ asset('storage/slider/' . $s->image) }}" class="img-fluid"  alt="{{ $s->image }}">
                             </td>
@@ -53,13 +51,9 @@
                             <td style="text-align: center">
                                 <form action="{{route('slider.destroy', $s->id)}}" method="POST" onsubmit="return confirm('Anda yakin menghapus ini?');">
                                     <div class="button-flex">
-                                        @if (Auth::user()->role->name == 'admin')
-                                            <a href="{{route('slider.accepted', $s->id)}}"><i class='bx bxs-like' ></i></a>
-                                            <a href="{{route('slider.rejected', $s->id)}}"><i class='bx bxs-dislike' ></i></a>
-                                        @endif
-                                        @if (Auth::user()->role->name == 'staff')
+                                        <a href="{{route('slider.accepted', $s->id)}}"><i class='bx bxs-like' ></i></a>
+                                        <a href="{{route('slider.rejected', $s->id)}}"><i class='bx bxs-dislike' ></i></a>
                                         <a href="{{route('slider.edit', $s->id)}}"><i class='bx bxs-edit' ></i></a>
-                                        @endif
                                         @csrf
                                         @method('DELETE')
                                         <button type="submit" class="button-delete"><i class='bx bxs-trash-alt' ></i></button>
@@ -73,7 +67,7 @@
             </div>
         </div>
         <footer>
-            <div>Copyright &copy; yaya_motor 2023</div>
+            <div>Copyright &copy; Kost Minur 2024</div>
         </footer>
     </main>
 @endsection

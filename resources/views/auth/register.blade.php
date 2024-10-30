@@ -38,8 +38,8 @@
       <div class="col-md-12">
         <div class="position-relative mb-4">
             <a href="#" class="brand position-absolute top-50 start-50 translate-middle" >
-                <i class='bx bxs-smile'></i>
-                <span class="text">YayaMotor</span>
+                <i class='bx bxs-building-house'></i>
+                <span class="text" style="white-space: nowrap;">Kost Minur</span>
             </a>
         </div>
         <form action="{{route('register.store')}}" method="post">

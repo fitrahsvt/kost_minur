@@ -45,7 +45,7 @@
             </form>
         </div>
         <footer>
-            <div>Copyright &copy; yaya_motor 2023</div>
+            <div>Copyright &copy; Kost Minur 2024</div>
         </footer>
     </main>
 @endsection
